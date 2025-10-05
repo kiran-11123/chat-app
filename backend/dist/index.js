@@ -5,6 +5,7 @@ const wss = new ws_1.WebSocketServer({ port: 8081 });
 let userCount = 0;
 let allSockets = [];
 wss.on('connection', (socket) => {
+    //@ts-ignore
     allSockets.push(socket);
     console.log("websocket server connected..");
     userCount = userCount + 1;
@@ -14,5 +15,9 @@ wss.on('connection', (socket) => {
         allSockets.map((e) => {
             e.send(message.toString() + " sent from the server..");
         });
+    });
+    socket.on("disconnect", () => {
+        //@ts-ignore
+        allSockets = allSockets.filter(x => x != socket);
     });
 });

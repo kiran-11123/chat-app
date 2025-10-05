@@ -4,10 +4,11 @@ const wss = new WebSocketServer({port:8081});
 
 let userCount = 0;
 
-let allSockets =[]
+let allSockets : WebSocket[] =[]
 
 wss.on('connection' , (socket)=>{
-
+    
+    //@ts-ignore
     allSockets.push(socket);
      
      console.log("websocket server connected..")
@@ -26,5 +27,10 @@ wss.on('connection' , (socket)=>{
 
           })
           
+     })
+
+     socket.on("disconnect" , ()=>{
+        //@ts-ignore
+        allSockets = allSockets.filter(x => x !=socket)
      })
 } )
