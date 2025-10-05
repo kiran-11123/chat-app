@@ -11,11 +11,8 @@ wss.on('connection', (socket) => {
     console.log("user connected #" + userCount);
     socket.on("message", (message) => {
         console.log("message received " + message.toString());
-        for (let i = 0; i < allSockets.length; i++) {
-            const s = allSockets[i];
-            if (s !== socket) {
-                s.send(message.toString() + " Sent by Server " + i);
-            }
-        }
+        allSockets.map((e) => {
+            e.send(message.toString() + " sent from the server..");
+        });
     });
 });
